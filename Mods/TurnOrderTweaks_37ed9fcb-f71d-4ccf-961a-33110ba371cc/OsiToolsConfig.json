@@ -2,6 +2,7 @@
     "RequiredExtensionVersion": 39,
     "FeatureFlags": [
         "OsirisExtensions",
-        "Lua"
+        "Lua",
+        "Preprocessor"
     ]
 }
