@@ -116,6 +116,11 @@ local function CalculateTurnOrder(combat, order)
     return order
 end
 
+function LLTURNTWEAKS_Ext_AddRandomFinesse(character)
+	local fin = LeaderLib.Common.GetRandom(20, -3)
+	CharacterAddAttribute(character, "Finesse", fin)
+end
+
 local GameSessionLoad = function ()
 	Ext.Print("[TurnOrderTweaks:Bootstrap.lua] Session is loading.")
 	AttributeBaseValue = tonumber(Ext.ExtraData.AttributeBaseValue)

@@ -5,6 +5,18 @@ INITSECTION
 KBSECTION
 IF
 CombatStarted(_)
+THEN
+CharacterLaunchOsirisOnlyIterator("Iterator_LLTURNTWEAKS_Debug_AddRandomFinesse");
+
+IF
+StoryEvent((CHARACTERGUID)_Char, "Iterator_LLTURNTWEAKS_Debug_AddRandomFinesse")
+AND
+String(_Char, _CharStr)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_AddRandomFinesse", _CharStr);
+
+IF
+CombatStarted(_)
 AND
 CharacterGetHostCharacter(_Host)
 THEN
