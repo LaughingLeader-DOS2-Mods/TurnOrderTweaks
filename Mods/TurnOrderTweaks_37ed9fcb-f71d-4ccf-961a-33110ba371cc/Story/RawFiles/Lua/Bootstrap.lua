@@ -31,7 +31,7 @@ function TurnOrderData:Create(team)
 	}
 	this.roll = LeaderLib.Common.GetRandom(20, 1)
 	if TurnOrderMode.id == ORDER_MODE.DND_FINESSE.id then
-		this.modifier = math.floor((team.Character.Stats.Finesse - (AttributeBaseValue + 0.1)) / 2)
+		this.modifier = math.floor((team.Character.Stats.Finesse - (AttributeBaseValue - 0.1)) / 2)
 		this.final = math.max(this.roll + this.modifier, 1)
 	else
 		this.final = this.roll
