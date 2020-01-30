@@ -13,32 +13,19 @@ local TurnOrderMode = ORDER_MODE.DND_FINESSE
 local AttributeBaseValue = 10
 local AttributeSoftCap = 40
 
----@class TurnOrderData
-local TurnOrderData = { 
-	roll = 0,
-	modifier = 0,
-	final = 0
+LLTurnTweaks = {
+	Vars = {
+		TurnOrderMode = TurnOrderMode,
+		AttributeBaseValue = AttributeBaseValue,
+		AttributeSoftCap = AttributeSoftCap
+	},
+	Types = {
+		ORDER_MODE = ORDER_MODE
+	}
 }
 
-TurnOrderData.__index = TurnOrderData
-
-function TurnOrderData:Create(team)
-    local this =
-    {
-		roll = 0,
-		modifier = 0,
-		final = 0
-	}
-	this.roll = LeaderLib.Common.GetRandom(20, 1)
-	if TurnOrderMode.id == ORDER_MODE.DND_FINESSE.id then
-		this.modifier = math.floor((team.Character.Stats.Finesse - (AttributeBaseValue - 0.1)) / 2)
-		this.final = math.max(this.roll + this.modifier, 1)
-	else
-		this.final = this.roll
-	end
-	setmetatable(this, self)
-    return this
-end
+Ext.Require("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_Classes.lua")
+Ext.Require("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_Debug.lua")
 
 local rolls = {}
 
@@ -78,11 +65,16 @@ local function compare(a,b)
     return score1 > score2
 end
 
+function LLTURNTWEAKS_Ext_ClearCombatData(combat)
+
+end
+
 local function CalculateTurnOrder(combat, order)
-	--Ext.Print(" --- COMBAT --- ")
-	--Ext.Print(LeaderLib.Common.Dump(getmetatable(combat)))
-	--Ext.Print(LeaderLib.Common.Dump(combat))
-	--Ext.Print(Ext.JsonStringify(combat))
+	Ext.Print(" --- COMBAT --- ")
+	Ext.Print(LeaderLib.Common.Dump(getmetatable(combat)))
+	Ext.Print(tostring(combat["CombatId"]))
+	Ext.Print(tostring(combat.ID))
+
 	Ext.Print(" --- TURN ORDER MODE --- ")
 	Ext.Print("["..tostring(TurnOrderMode.id) .. "] " ..TurnOrderMode.name)
 	
@@ -95,7 +87,10 @@ local function CalculateTurnOrder(combat, order)
 		rolls = {}
 
 		for i,team in pairs(order) do
-			rolls[team] = TurnOrderData:Create(team)
+			if rolls[team] == nil then
+				rolls[team] = LLTurnTweaks.Types.TurnOrderRollData:Create(team)
+				LLTWEAKS_Ext_Lua_DumpTurnCharacterStats(team)
+			end
 		end
 		--Ext.Print("Rolls: " .. LeaderLib.Common.Dump(rolls))
 	end
@@ -113,6 +108,9 @@ local function CalculateTurnOrder(combat, order)
 			Ext.Print("Team ID("..tostring(team.TeamId)..") Team Initiative("..tostring(team.Initiative)..") StillInCombat("..tostring(team.StillInCombat)..") Character[Roll("..tostring(rollResult.roll)..") Finesse("..tostring(team.Character.Stats.Finesse)..") Modifier("..tostring(rollResult.modifier)..") Final ("..tostring(rollResult.final)..")]")
 		end
 	end
+
+	combat:UpdateNextTurnOrder(order)
+
     return order
 end
 
