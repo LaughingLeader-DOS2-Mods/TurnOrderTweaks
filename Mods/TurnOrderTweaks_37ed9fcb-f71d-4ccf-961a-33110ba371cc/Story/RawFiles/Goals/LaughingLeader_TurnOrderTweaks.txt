@@ -1,0 +1,24 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+LLTURNTWEAKS_Internal_Start();
+KBSECTION
+PROC
+LLTURNTWEAKS_Internal_Start()
+THEN
+DebugBreak("[LaughingLeader_TurnOrderTweaks] Starting TurnOrderTweaks.");
+GoalCompleted;
+
+/*
+For existing saves, where this goal was never completed 
+(or perhaps it was set back to sleeping)
+*/
+IF
+SavegameLoaded(_,_,_,_)
+THEN
+DebugBreak("[LaughingLeader_TurnOrderTweaks:SavegameLoaded] TurnOrderTweaks was added to an existing save.");
+GoalCompleted;
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "LeaderLib_11__Start"

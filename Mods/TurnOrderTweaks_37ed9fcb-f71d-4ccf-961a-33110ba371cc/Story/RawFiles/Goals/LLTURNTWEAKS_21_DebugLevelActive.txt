@@ -1,0 +1,25 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+IF
+CombatStarted(_)
+AND
+CharacterGetHostCharacter(_Host)
+THEN
+CharacterSetImmortal(_Host, 1);
+
+IF
+RegionEnded("_TMPL_Sandbox")
+THEN
+GoalCompleted;
+
+IF
+RegionEnded("TestLevel_LL_LeaderLib")
+THEN
+GoalCompleted;
+EXITSECTION
+NRD_LuaReset(1);
+ENDEXITSECTION
+ParentTargetEdge "LLTURNTWEAKS_20_Debug"
