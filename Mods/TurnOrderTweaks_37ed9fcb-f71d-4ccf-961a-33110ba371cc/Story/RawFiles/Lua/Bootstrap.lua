@@ -116,4 +116,21 @@ local function CalculateTurnOrder(combat, order)
     return order
 end
 
-Ext.RegisterListener("CalculateTurnOrder", CalculateTurnOrder)
+local GameSessionLoad = function ()
+	Ext.Print("[TurnOrderTweaks:Bootstrap.lua] Session is loading.")
+	AttributeBaseValue = tonumber(Ext.ExtraData.AttributeBaseValue)
+	AttributeSoftCap = tonumber(Ext.ExtraData.AttributeSoftCap)
+	Ext.Print("[LLTURNTWEAKS:GameSessionLoad] ExtraData keys - AttributeBaseValue("..tostring(AttributeBaseValue)..") AttributeSoftCap("..tostring(AttributeSoftCap)..")")
+end
+
+local ModuleLoading = function ()
+	Ext.Print("[TurnOrderTweaks:Bootstrap.lua] Module is loading.")
+end
+
+--v36 and higher
+if Ext.RegisterListener ~= nil then
+    Ext.RegisterListener("SessionLoading", GameSessionLoad)
+	--Ext.RegisterListener("ModuleLoading", ModuleLoading)
+	Ext.RegisterListener("CalculateTurnOrder", CalculateTurnOrder)
+end
+
