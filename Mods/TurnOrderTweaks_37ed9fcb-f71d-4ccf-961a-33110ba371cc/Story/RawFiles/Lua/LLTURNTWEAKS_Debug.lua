@@ -91,7 +91,7 @@ stat_properties[#stat_properties+1] = "Sight"
 stat_properties[#stat_properties+1] = "Hearing"
 stat_properties[#stat_properties+1] = "Movement"
 stat_properties[#stat_properties+1] = "Initiative"
-stat_properties[#stat_properties+1] = "Unknown"
+--stat_properties[#stat_properties+1] = "Unknown"
 stat_properties[#stat_properties+1] = "ChanceToHitBoost"
 
 function LLTWEAKS_Ext_Lua_DumpTurnCharacterStats(team)
