@@ -19,7 +19,7 @@
                 <node id="ModuleInfo">
                     <attribute id="Author" value="LaughingLeader" type="30" />
                     <attribute id="CharacterCreationLevelName" value="" type="22" />
-                    <attribute id="Description" value="Changes the turn order system to one of many options. Default: Initiative-bases (Early Access)" type="30" />
+                    <attribute id="Description" value="Changes the turn order system to one of many option (Initiative, DnD Style, Random)." type="30" />
                     <attribute id="DescriptionName" value="" handle="ls::TranslatedStringRepository::s_HandleUnknown" type="28" />
                     <attribute id="DisplayName" value="" handle="ls::TranslatedStringRepository::s_HandleUnknown" type="28" />
                     <attribute id="Folder" value="TurnOrderTweaks_37ed9fcb-f71d-4ccf-961a-33110ba371cc" type="30" />
