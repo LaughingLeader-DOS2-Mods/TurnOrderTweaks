@@ -1,8 +1,8 @@
 {
-    "RequiredExtensionVersion": 39,
+    "RequiredExtensionVersion": 43,
+    "MinimumExtensionVersion": 42,
     "FeatureFlags": [
         "OsirisExtensions",
-        "Lua",
-        "Preprocessor"
+        "Lua"
     ]
 }
