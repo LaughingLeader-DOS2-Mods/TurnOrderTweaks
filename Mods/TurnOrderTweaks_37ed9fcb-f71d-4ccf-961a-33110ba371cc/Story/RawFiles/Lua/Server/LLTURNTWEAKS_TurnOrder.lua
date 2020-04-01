@@ -1,31 +1,8 @@
-local ORDER_MODE = LeaderLib.Common.Enum(
-{
-	"DISABLED",
-	"INITIATIVE",
-	"FINESSE",
-	"FINESSE_INITIATIVE",
-	"DND_FINESSE",
-	"RANDOM",
-})
+local MOD_UUID = "TurnOrderTweaks_37ed9fcb-f71d-4ccf-961a-33110ba371cc"
+Ext.Require(MOD_UUID, "Shared/LLTURNTWEAKS_Main.lua")
 
-local TurnOrderMode = ORDER_MODE.DND_FINESSE
-
-local AttributeBaseValue = 10
-local AttributeSoftCap = 40
-
-LLTurnTweaks = {
-	Vars = {
-		TurnOrderMode = TurnOrderMode,
-		AttributeBaseValue = AttributeBaseValue,
-		AttributeSoftCap = AttributeSoftCap
-	},
-	Types = {
-		ORDER_MODE = ORDER_MODE
-	}
-}
-
-Ext.Require("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_Classes.lua")
-Ext.Require("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_Debug.lua")
+local ORDER_MODE = LLTurnTweaks.ORDER_MODE
+local TurnOrderMode = LLTurnTweaks.TurnOrderMode
 
 local rolls = {}
 
@@ -65,11 +42,7 @@ local function compare(a,b)
     return score1 > score2
 end
 
-function LLTURNTWEAKS_Ext_ClearCombatData(combat)
-
-end
-
-local function CalculateTurnOrder(combat, order)
+local function LLTURNTWEAKS_CalculateTurnOrder(combat, order)
 	Ext.Print(" --- COMBAT --- ")
 	Ext.Print(LeaderLib.Common.Dump(getmetatable(combat)))
 	Ext.Print(tostring(combat["CombatId"]))
@@ -114,26 +87,16 @@ local function CalculateTurnOrder(combat, order)
     return order
 end
 
-function LLTURNTWEAKS_Ext_AddRandomFinesse(character)
-	local fin = LeaderLib.Common.GetRandom(20, -3)
-	CharacterAddAttribute(character, "Finesse", fin)
-end
+Ext.RegisterListener("CalculateTurnOrder", LLTURNTWEAKS_CalculateTurnOrder)
 
-local GameSessionLoad = function ()
-	Ext.Print("[TurnOrderTweaks:Bootstrap.lua] Session is loading.")
-	AttributeBaseValue = tonumber(Ext.ExtraData.AttributeBaseValue)
-	AttributeSoftCap = tonumber(Ext.ExtraData.AttributeSoftCap)
-	Ext.Print("[LLTURNTWEAKS:GameSessionLoad] ExtraData keys - AttributeBaseValue("..tostring(AttributeBaseValue)..") AttributeSoftCap("..tostring(AttributeSoftCap)..")")
+local function LLTURNTWEAKS_UpdateTurnOrderMode(channel, order)
+	local nextOrder = ORDER_MODE[order]
+	if nextOrder ~= nil then
+		LLTurnTweaks.TurnOrderMode = nextOrder
+		TurnOrderMode = LLTurnTweaks.TurnOrderMode
+		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] Received message from client. Changed turn order mode to ("..tostring(order)..").")
+	else
+		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] [*ERROR*] Received message from client. Value ("..tostring(order)..") is not a valid turn order enum!")
+	end
 end
-
-local ModuleLoading = function ()
-	Ext.Print("[TurnOrderTweaks:Bootstrap.lua] Module is loading.")
-end
-
---v36 and higher
-if Ext.RegisterListener ~= nil then
-    Ext.RegisterListener("SessionLoading", GameSessionLoad)
-	--Ext.RegisterListener("ModuleLoading", ModuleLoading)
-	Ext.RegisterListener("CalculateTurnOrder", CalculateTurnOrder)
-end
-
+Ext.RegisterNetListener("LLTURNTWEAKS_UpdateTurnOrderMode", LLTURNTWEAKS_UpdateTurnOrderMode)

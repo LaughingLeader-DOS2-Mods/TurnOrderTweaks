@@ -1,5 +1,7 @@
+--Ext.Require("LeaderLib_7e737d2f-31d2-4751-963f-be6ccc59cd0c", "Shared/LeaderLib_Common.lua")
+
 ---@class TurnOrderData
-local TurnOrderData = { 
+local TurnOrderData = {
 	combatid = 0,
 	rolldata = {}
 }
@@ -14,6 +16,7 @@ function TurnOrderData:Create(combatid)
 	setmetatable(this, self)
     return this
 end
+LLTurnTweaks.Types["TurnOrderData"] = TurnOrderData
 
 ---@class TurnOrderRollData
 local TurnOrderRollData = {
@@ -30,7 +33,7 @@ TurnOrderRollData.__index = TurnOrderRollData
 function TurnOrderRollData:Roll()
 	if LLTurnTweaks.Vars.TurnOrderMode.id == LLTurnTweaks.Types.ORDER_MODE.DND_FINESSE.id then
 		self.roll = LeaderLib.Common.GetRandom(20, 1)
-		self.modifier = math.floor((self.team.Character.Stats.Finesse - (LLTurnTweaks.Vars.AttributeBaseValue - 0.1)) / 2)
+		self.modifier = math.floor((self.team.Character.Stats.Finesse - (Ext.ExtraData.AttributeBaseValue - 0.1)) / 2)
 		self.final = math.max(self.roll + self.modifier, 1)
 	else
 		self.roll = LeaderLib.Common.GetRandom(999)
@@ -50,6 +53,4 @@ function TurnOrderRollData:Create(team)
 	this.Roll(this)
     return this
 end
-
-LLTurnTweaks.Types["TurnOrderData"] = TurnOrderData
 LLTurnTweaks.Types["TurnOrderRollData"] = TurnOrderRollData
