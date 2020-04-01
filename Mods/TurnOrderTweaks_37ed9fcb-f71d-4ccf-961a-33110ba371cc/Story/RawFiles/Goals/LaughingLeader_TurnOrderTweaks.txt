@@ -14,7 +14,7 @@ For existing saves, where this goal was never completed
 (or perhaps it was set back to sleeping)
 */
 IF
-SavegameLoaded(_,_,_,_)
+SavegameLoading(_,_,_,_)
 THEN
 DebugBreak("[LaughingLeader_TurnOrderTweaks:SavegameLoaded] TurnOrderTweaks was added to an existing save.");
 GoalCompleted;

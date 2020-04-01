@@ -1,0 +1,23 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+KBSECTION
+IF
+GameStarted(_,_)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_OnGameStarted");
+
+PROC
+LLTURNTWEAKS_StartClientTimer()
+THEN
+TimerCancel("Timers_LLTURNTWEAKS_CheckForOptionsMenu");
+TimerLaunch("Timers_LLTURNTWEAKS_CheckForOptionsMenu", 250);
+
+IF
+TimerFinished("Timers_LLTURNTWEAKS_CheckForOptionsMenu")
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_SetupOptionsMenu");
+
+EXITSECTION
+ENDEXITSECTION
+ParentTargetEdge "LaughingLeader_TurnOrderTweaks"
