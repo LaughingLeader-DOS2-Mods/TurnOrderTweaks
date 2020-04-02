@@ -1,0 +1,38 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+IF
+DialogStarted("LLTURNTWEAKS_SettingsMenu", _Instance)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_SetDialogOrderVariable");
+
+IF
+ObjectFlagSet("LLTURNTWEAKS_Commands_SetNextMode", _Char, _Instance)
+THEN
+ObjectClearFlag(_Char, "LLTURNTWEAKS_NextMode", _Instance);
+NRD_LuaCall("LLTURNTWEAKS_Ext_CycleNextMode");
+
+IF
+ObjectFlagSet("LLTURNTWEAKS_Commands_SetPreviousMode", _Char, _Instance)
+THEN
+ObjectClearFlag(_Char, "LLTURNTWEAKS_PreviousMode", _Instance);
+NRD_LuaCall("LLTURNTWEAKS_Ext_CyclePreviousMode");
+
+PROC
+LLTURNTWEAKS_SetTurnOrderMode((INTEGER)_ID)
+THEN
+SysClear("DB_LLTURNTWEAKS_TurnOrderMode", 1);
+DB_LLTURNTWEAKS_TurnOrderMode(_ID);
+
+IF
+SavegameLoaded(_,_,_,_)
+AND
+DB_LLTURNTWEAKS_TurnOrderMode(_ID)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_SetTurnOrderMode", (STRING)_ID);
+
+EXITSECTION
+ENDEXITSECTION
+ParentTargetEdge "LaughingLeader_TurnOrderTweaks"
