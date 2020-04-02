@@ -1,5 +1,55 @@
 --Ext.Require("LeaderLib_7e737d2f-31d2-4751-963f-be6ccc59cd0c", "Shared/LeaderLib_Common.lua")
 
+---@class TranslatedString
+local TranslatedString = {
+	Handle = "",
+	Key = "",
+	Content = "",
+}
+TranslatedString.__index = TranslatedString
+
+function TranslatedString:Create(key,handle,content)
+    local this =
+    {
+		Handle = handle,
+		Key = key,
+		Content = content
+	}
+	setmetatable(this, self)
+    return this
+end
+LLTurnTweaks.Types["TranslatedString"] = TranslatedString
+
+---@class TurnOrderModeEntry
+local TurnOrderModeEntry = {
+	name = "",
+	---@type integer
+	id = -1,
+	---@type TranslatedString
+	DisplayName = {},
+	---@type TranslatedString
+	Description = {},
+}
+
+TurnOrderModeEntry.__index = TurnOrderModeEntry
+
+---@param id integer
+---@param name string
+---@param displayName TranslatedString
+---@param description TranslatedString
+function TurnOrderModeEntry:Create(id,name,displayName,description)
+    local this =
+    {
+		id = id,
+		name = name,
+		DisplayName = displayName,
+		Description = description
+	}
+	setmetatable(this, self)
+    return this
+end
+LLTurnTweaks.Types["TurnOrderModeEntry"] = TurnOrderModeEntry
+
 ---@class TurnOrderData
 local TurnOrderData = {
 	combatid = 0,
