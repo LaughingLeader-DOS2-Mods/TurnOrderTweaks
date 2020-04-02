@@ -1,0 +1,13 @@
+Key	Content	Handle
+LLTURNTWEAKS_Order_Initiative_DisplayName	<font color='#FF9900'>Initiative</font>	hd8add845gf6feg4eb3g9d71g05c3c7ba4fce
+LLTURNTWEAKS_Order_Initiative_Description	Turn order is determined by highest Initiative.	h46f805dcgf833g420dg8175g5f50f8202c9d
+LLTURNTWEAKS_Order_Finesse_DisplayName	<font color='#22FF33'>Finesse</font>	hc80e4571gab11g45fcg9920gdc32234e776f
+LLTURNTWEAKS_Order_Finesse_Description	Turn order is determined by highest Finesse.	h4d0a58a5g7debg4170g937cg084bf0971ac7
+LLTURNTWEAKS_Order_FinesseInitiative_DisplayName	<font color='#CCAA33'>Finesse & Initiative</font>	hcb5d021cg88a4g4ec8ga9a0g938e021ea4cb
+LLTURNTWEAKS_Order_FinesseInitiative_Description	Turn order is determined by highest Finesse first, then highest Initiative second.	h6c916bfbgf30cg46degb035g3e376517c59b
+LLTURNTWEAKS_Order_DnDFinesse_DisplayName	<font color='#DDDD00'>D&D Roll Initiative Mode (with Finesse Modifier)</font>	h6ca2d2d0g6ea7g4933g887dgbacf14dbe18c
+LLTURNTWEAKS_Order_DnDFinesse_Description	All characters in combat roll for initiative and add their Finesse value as a modifier.	h5e2905e6g8de1g4732g853bg7a08e702c311
+LLTURNTWEAKS_Order_Random_DisplayName	<font color='#CCAACC'>Random</font>	hba92cf91g8973g44ecga756gefcb7c818285
+LLTURNTWEAKS_Order_Random_Description	Turn order is random.	haee13e4fga3efg4b2fgb108gfc17a336237d
+LLTURNTWEAKS_Order_Disabled_DisplayName	<font color='#FF3333'>Disabled</font>	h20b1f03fg9c7dg4371g83b8g61a5f7a4ede8
+LLTURNTWEAKS_Order_Disabled_Description	Turn order changes are disabled (uses the default game order).	h88e594fcgb0f7g4c70g8201g7761f468f2a8

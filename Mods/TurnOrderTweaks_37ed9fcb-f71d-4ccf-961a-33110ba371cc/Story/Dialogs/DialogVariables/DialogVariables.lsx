@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<save>
+    <header version="2" />
+    <version major="3" minor="6" revision="6" build="0" />
+    <region id="DialogVariables">
+        <node id="root">
+            <children>
+                <node id="DialogVariable">
+                    <attribute id="DefaultValue" value="" type="23" />
+                    <attribute id="Description" value="" type="23" />
+                    <attribute id="UUID" value="46c06644-40ff-4041-a7c6-2efd4f85f31e" type="31" />
+                    <attribute id="name" value="LLTURNTWEAKS_CurrentOrderModeDescription" type="22" />
+                    <attribute id="type" value="TranslatedString" type="23" />
+                </node>
+                <node id="DialogVariable">
+                    <attribute id="DefaultValue" value="" type="23" />
+                    <attribute id="Description" value="" type="23" />
+                    <attribute id="UUID" value="8fcb5a53-8c9c-4239-a427-6ce8d4e1f606" type="31" />
+                    <attribute id="name" value="LLTURNTWEAKS_CurrentOrderModeDisplayName" type="22" />
+                    <attribute id="type" value="TranslatedString" type="23" />
+                </node>
+            </children>
+        </node>
+    </region>
+</save>

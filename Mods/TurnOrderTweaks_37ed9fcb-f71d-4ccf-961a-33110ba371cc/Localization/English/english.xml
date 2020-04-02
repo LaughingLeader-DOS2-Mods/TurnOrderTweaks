@@ -1,0 +1,20 @@
+<contentList>
+	<content contentuid="h88e594fcgb0f7g4c70g8201g7761f468f2a8" Key="LLTURNTWEAKS_Order_Disabled_Description">Turn order changes are disabled (uses the default game order).</content>
+	<content contentuid="h20b1f03fg9c7dg4371g83b8g61a5f7a4ede8" Key="LLTURNTWEAKS_Order_Disabled_DisplayName">&lt;font color=&apos;#FF3333&apos;&gt;Disabled&lt;/font&gt;</content>
+	<content contentuid="h5e2905e6g8de1g4732g853bg7a08e702c311" Key="LLTURNTWEAKS_Order_DnDFinesse_Description">All characters in combat roll for initiative and add their Finesse value as a modifier.</content>
+	<content contentuid="h6ca2d2d0g6ea7g4933g887dgbacf14dbe18c" Key="LLTURNTWEAKS_Order_DnDFinesse_DisplayName">&lt;font color=&apos;#DDDD00&apos;&gt;D&amp;D Roll Initiative Mode (with Finesse Modifier)&lt;/font&gt;</content>
+	<content contentuid="h4d0a58a5g7debg4170g937cg084bf0971ac7" Key="LLTURNTWEAKS_Order_Finesse_Description">Turn order is determined by highest Finesse.</content>
+	<content contentuid="hc80e4571gab11g45fcg9920gdc32234e776f" Key="LLTURNTWEAKS_Order_Finesse_DisplayName">&lt;font color=&apos;#22FF33&apos;&gt;Finesse&lt;/font&gt;</content>
+	<content contentuid="h6c916bfbgf30cg46degb035g3e376517c59b" Key="LLTURNTWEAKS_Order_FinesseInitiative_Description">Turn order is determined by highest Finesse first, then highest Initiative second.</content>
+	<content contentuid="hcb5d021cg88a4g4ec8ga9a0g938e021ea4cb" Key="LLTURNTWEAKS_Order_FinesseInitiative_DisplayName">&lt;font color=&apos;#CCAA33&apos;&gt;Finesse &amp; Initiative&lt;/font&gt;</content>
+	<content contentuid="h46f805dcgf833g420dg8175g5f50f8202c9d" Key="LLTURNTWEAKS_Order_Initiative_Description">Turn order is determined by highest Initiative.</content>
+	<content contentuid="hd8add845gf6feg4eb3g9d71g05c3c7ba4fce" Key="LLTURNTWEAKS_Order_Initiative_DisplayName">&lt;font color=&apos;#FF9900&apos;&gt;Initiative&lt;/font&gt;</content>
+	<content contentuid="haee13e4fga3efg4b2fgb108gfc17a336237d" Key="LLTURNTWEAKS_Order_Random_Description">Turn order is random.</content>
+	<content contentuid="hba92cf91g8973g44ecga756gefcb7c818285" Key="LLTURNTWEAKS_Order_Random_DisplayName">&lt;font color=&apos;#CCAACC&apos;&gt;Random&lt;/font&gt;</content>
+	<content contentuid="hf0408638g7a31g44begadefgc261a78ada32">[HOST-ONLY] Only the host can set the turn order mode.</content>
+	<content contentuid="h774d6e6bge738g4d56gaba5g2a92dd13e44b">Set to Previous Order Mode</content>
+	<content contentuid="h8694f15ag63e9g4586gb76dgc000dbf14f67">Set to Next Order Mode</content>
+	<content contentuid="h4d7cd54dgdf0eg4be8g99e6g34888fa940ee">[Exit]</content>
+	<content contentuid="h2a0a3921gba64g4123gb745ge749f8623b79">Turn Order Tweaks Settings&lt;br&gt;Current Mode: [LLTURNTWEAKS_CurrentOrderModeDisplayName_8fcb5a53-8c9c-4239-a427-6ce8d4e1f606]&lt;br&gt;[LLTURNTWEAKS_CurrentOrderModeDescription_46c06644-40ff-4041-a7c6-2efd4f85f31e]</content>
+	<content contentuid="h5a7aa7c0g63fcg4cefgb3a1g42daf9424475">Updating settings.</content>
+</contentList>

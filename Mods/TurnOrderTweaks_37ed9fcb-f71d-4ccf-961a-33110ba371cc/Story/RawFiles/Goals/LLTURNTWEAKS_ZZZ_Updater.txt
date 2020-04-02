@@ -1,6 +1,7 @@
 Version 1
 SubGoalCombiner SGC_AND
 INITSECTION
+LLTURNTWEAKS_InitLeaderLibSettings();
 KBSECTION
 
 //REGION LEADERLIB
@@ -41,7 +42,8 @@ AND
 // DB_LeaderLib_ModMenu_RegisteredMenuData(_ID, _DisplayName, _Dialog, _ModID, _Author);
 NOT DB_LeaderLib_ModMenu_RegisteredMenuData("37ed9fcb-f71d-4ccf-961a-33110ba371cc", (STRING)_, "LLTURNTWEAKS_SettingsMenu", (STRING)_, (STRING)_)
 THEN
-DB_LeaderLib_ModApi_RegisterMenu("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_SettingsMenu", "[Turn Order Tweaks] Settings");
+//LeaderLib_Register_ModMenuByUUID((STRING)_UUID, (STRING)_Dialog, (STRING)_DisplayName, (STRING)_ModID, (STRING)_Author)
+LeaderLib_Register_ModMenu("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_SettingsMenu", "[Turn Order Tweaks] Settings");
 
 /* Called when a mod is registered for the first time. */
 /*
@@ -73,55 +75,11 @@ PROC
 LeaderLib_GlobalSettings_GetIntegerVariable(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode")
 THEN
 NRD_LuaCall("LLTURNTWEAKS_Ext_SaveTurnOrderMode");
-//LeaderLib_GlobalSettings_SaveIntegerVariable(_UUID, _VarName, _Value);
 
-/*
-Called by LeaderLib when a global variable is loaded.
-Listen for this in mods to transfer the variable value to your scripts.
-*/
 PROC
 LeaderLib_GlobalSettings_SetIntegerVariable(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode", (INTEGER)_Value)
 THEN
 NRD_LuaCall("LLTURNTWEAKS_Ext_SetTurnOrderMode", (STRING)_Value);
-//END_REGION
-
-//REGION UPDATING
-IF
-SavegameLoading(_,_,_,_)
-THEN
-NRD_LuaCall("LLTURNTWEAKS_Ext_UpdateMod");
-
-PROC
-LLTURNTWEAKS_OnGetVersion((INTEGER)_Next)
-AND
-DB_LLTURNTWEAKS_LastVersion(_Last)
-THEN
-NOT DB_LLTURNTWEAKS_LastVersion(_Last);
-DB_LLTURNTWEAKS_LastVersion(_Next);
-LLTURNTWEAKS_OnVersionChanged(_Last, _Next);
-
-PROC
-LLTURNTWEAKS_OnGetVersion((INTEGER)_Next)
-AND
-NOT DB_LLTURNTWEAKS_LastVersion(_)
-THEN
-DB_LLTURNTWEAKS_LastVersion(_Next);
-LLTURNTWEAKS_OnVersionChanged(-1, _Next);
-
-PROC
-LLTURNTWEAKS_OnVersionChanged((INTEGER)_Last, (INTEGER)_Next)
-THEN
-DB_NOOP(1);
-
-// Remove all Indomitable talents
-PROC
-LLTURNTWEAKS_OnVersionChanged(-1, (INTEGER)_Next)
-AND
-_Next > 268435456
-AND
-NOT SysIsActive("LLTURNTWEAKS_Updater_GameStarted")
-THEN
-SysActivateGoal("LLTURNTWEAKS_Updater_GameStarted");
 //END_REGION
 EXITSECTION
 ENDEXITSECTION
