@@ -1,0 +1,128 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+KBSECTION
+
+//REGION LEADERLIB
+IF
+ObjectFlagSet("LLTURNTWEAKS_SaveGlobalSettings", (CHARACTERGUID)_Char, _)
+THEN
+ObjectClearFlag(_Char, "LLTURNTWEAKS_SaveGlobalSettings", 0);
+LLTURNTWEAKS_SaveGlobalSettings(_Char);
+
+PROC
+LLTURNTWEAKS_SaveGlobalSettings()
+AND
+CharacterGetHostCharacter(_Host)
+THEN
+LLTURNTWEAKS_SaveGlobalSettings(_Host);
+
+PROC
+LLTURNTWEAKS_SaveGlobalSettings((CHARACTERGUID)_Char)
+AND
+GlobalGetFlag("LeaderLib_Initialized", 1)
+AND
+GlobalGetFlag("LeaderLib_ExtenderIsActive", 1)
+AND
+CharacterGetHostCharacter(_Host)
+THEN
+SetStoryEvent(_Host, "LeaderLib_Commands_SaveGlobalSettings");
+
+PROC
+LLTURNTWEAKS_InitLeaderLibSettings()
+AND
+NOT DB_LeaderLib_GlobalSettings_GlobalIntegers(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode", (INTEGER)_)
+THEN
+LeaderLib_GlobalSettings_Register_GlobalInteger(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode", 0);
+
+PROC
+LLTURNTWEAKS_InitLeaderLibSettings()
+AND
+// DB_LeaderLib_ModMenu_RegisteredMenuData(_ID, _DisplayName, _Dialog, _ModID, _Author);
+NOT DB_LeaderLib_ModMenu_RegisteredMenuData("37ed9fcb-f71d-4ccf-961a-33110ba371cc", (STRING)_, "LLTURNTWEAKS_SettingsMenu", (STRING)_, (STRING)_)
+THEN
+DB_LeaderLib_ModApi_RegisterMenu("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_SettingsMenu", "[Turn Order Tweaks] Settings");
+
+/* Called when a mod is registered for the first time. */
+/*
+PROC
+LeaderLib_Mods_OnModRegistered(37ed9fcb-f71d-4ccf-961a-33110ba371cc, (INTEGER)_Version, (INTEGER)_Major, (INTEGER)_Minor, (INTEGER)_Revision, (INTEGER)_Build)
+THEN
+LLTURNTWEAKS_InitLeaderLibSettings();
+*/
+
+/* Called when a mod's registered version changes. */
+PROC
+LeaderLib_Mods_OnVersionChanged(37ed9fcb-f71d-4ccf-961a-33110ba371cc, (INTEGER)_LastVersion, (INTEGER)_NextVersion)
+AND
+NOT DB_LLTURNTWEAKS_RegisteredLeaderLibSettings(1)
+THEN
+DB_LLTURNTWEAKS_RegisteredLeaderLibSettings(1);
+LLTURNTWEAKS_InitLeaderLibSettings();
+
+/*
+PROC
+LeaderLib_Mods_OnVersionChanged(37ed9fcb-f71d-4ccf-961a-33110ba371cc, (INTEGER)_LastMajor, (INTEGER)_LastMinor, (INTEGER)_LastRevision, (INTEGER)_LastBuild, (INTEGER)_NextMajor, (INTEGER)_NextMinor, (INTEGER)_NextRevision, (INTEGER)_NextBuild)
+THEN
+DB_NOOP(1);
+*/
+//END_REGION
+
+//REGION GLOBAL_TURN_ORDER_VAR
+PROC
+LeaderLib_GlobalSettings_GetIntegerVariable(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode")
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_SaveTurnOrderMode");
+//LeaderLib_GlobalSettings_SaveIntegerVariable(_UUID, _VarName, _Value);
+
+/*
+Called by LeaderLib when a global variable is loaded.
+Listen for this in mods to transfer the variable value to your scripts.
+*/
+PROC
+LeaderLib_GlobalSettings_SetIntegerVariable(37ed9fcb-f71d-4ccf-961a-33110ba371cc, "LLTURNTWEAKS_TurnOrderMode", (INTEGER)_Value)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_SetTurnOrderMode", (STRING)_Value);
+//END_REGION
+
+//REGION UPDATING
+IF
+SavegameLoading(_,_,_,_)
+THEN
+NRD_LuaCall("LLTURNTWEAKS_Ext_UpdateMod");
+
+PROC
+LLTURNTWEAKS_OnGetVersion((INTEGER)_Next)
+AND
+DB_LLTURNTWEAKS_LastVersion(_Last)
+THEN
+NOT DB_LLTURNTWEAKS_LastVersion(_Last);
+DB_LLTURNTWEAKS_LastVersion(_Next);
+LLTURNTWEAKS_OnVersionChanged(_Last, _Next);
+
+PROC
+LLTURNTWEAKS_OnGetVersion((INTEGER)_Next)
+AND
+NOT DB_LLTURNTWEAKS_LastVersion(_)
+THEN
+DB_LLTURNTWEAKS_LastVersion(_Next);
+LLTURNTWEAKS_OnVersionChanged(-1, _Next);
+
+PROC
+LLTURNTWEAKS_OnVersionChanged((INTEGER)_Last, (INTEGER)_Next)
+THEN
+DB_NOOP(1);
+
+// Remove all Indomitable talents
+PROC
+LLTURNTWEAKS_OnVersionChanged(-1, (INTEGER)_Next)
+AND
+_Next > 268435456
+AND
+NOT SysIsActive("LLTURNTWEAKS_Updater_GameStarted")
+THEN
+SysActivateGoal("LLTURNTWEAKS_Updater_GameStarted");
+//END_REGION
+EXITSECTION
+ENDEXITSECTION
+ParentTargetEdge "LaughingLeader_TurnOrderTweaks"

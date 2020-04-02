@@ -89,14 +89,43 @@ end
 
 Ext.RegisterListener("CalculateTurnOrder", LLTURNTWEAKS_CalculateTurnOrder)
 
-local function LLTURNTWEAKS_UpdateTurnOrderMode(channel, order)
-	local nextOrder = ORDER_MODE[order]
+local function LLTURNTWEAKS_UpdateTurnOrderMode(channel, param)
+	local nextOrder = nil
+	local paramInt = math.tointeger(param)
+	for key,order in pairs(ORDER_MODE) do
+		if (paramInt ~= nil and order.id == paramInt) or order.name == param then
+			nextOrder = order
+			break
+		end
+	end
 	if nextOrder ~= nil then
 		LLTurnTweaks.TurnOrderMode = nextOrder
 		TurnOrderMode = LLTurnTweaks.TurnOrderMode
-		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] Received message from client. Changed turn order mode to ("..tostring(order)..").")
+		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] Received net message. Changed turn order mode to ("..tostring(nextOrder.name)..").")
 	else
-		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] [*ERROR*] Received message from client. Value ("..tostring(order)..") is not a valid turn order enum!")
+		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:LLTURNTWEAKS_UpdateTurnOrderMode] [*ERROR*] Received message from client. Value ("..tostring(param)..") is not a valid turn order enum!")
 	end
 end
 Ext.RegisterNetListener("LLTURNTWEAKS_UpdateTurnOrderMode", LLTURNTWEAKS_UpdateTurnOrderMode)
+
+function LLTURNTWEAKS_Ext_SaveTurnOrderMode()
+	Osi.LeaderLib_GlobalSettings_SaveIntegerVariable("37ed9fcb-f71d-4ccf-961a-33110ba371cc", "LLTURNTWEAKS_TurnOrderMode", TurnOrderMode.id)
+end
+
+function LLTURNTWEAKS_Ext_SetTurnOrderMode(intStr)
+	local nextOrderId = math.tointeger(intStr)
+	local nextOrder = nil
+	if nextOrderId < 0 then nextOrderId = 0 end
+	for enumName,enum in pairs(ORDER_MODE) do
+		if nextOrderId == enum.id then
+			nextOrder = enum
+			break
+		end
+	end
+	if nextOrder ~= nil then
+		LLTurnTweaks.TurnOrderMode = nextOrder
+		TurnOrderMode = LLTurnTweaks.TurnOrderMode
+		Ext.Print("[LLTURNTWEAKS_TurnOrder.lua:SetTurnOrderMode] Loaded global var. Set next turn order mode to ("..tostring(nextOrder.name)..")["..tostring(nextOrder.id).."].")
+		Ext.BroadcastMessage("LLTURNTWEAKS_UpdateTurnOrderMode", nextOrder.name, nil)
+	end
+end
